@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:life_platter/routing.dart';
+import 'package:life_platter/routing/routing.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

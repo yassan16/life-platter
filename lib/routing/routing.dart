@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:life_platter/base_screen.dart';
+import 'package:life_platter/common_widgets/base_page.dart';
 import 'package:life_platter/sample_screen.dart';
 
 // Navigator : 画面のスタック（履歴）を管理するクラス
@@ -16,12 +16,6 @@ class Routing {
   // Features Branch
   static final String featuresScreenRouter = '/features';
 
-  // 01_widget_tree
-  static final String route_01 = '/01_widget_tree';
-  static final String route_01_001 =
-      '$route_01/001_parent_child_widget_rebuild';
-  static final String route_01_002 = '$route_01/002_listview_builder';
-
   // Mapbox Branch
   static final String bScreenRouter = '/b';
 
@@ -35,7 +29,7 @@ class Routing {
       StatefulShellRoute.indexedStack(
         parentNavigatorKey: rootNavigatorKey,
         builder: (context, state, navigationShell) {
-          return BaseScreen(navigationShell: navigationShell);
+          return BasePage(navigationShell: navigationShell);
         },
         branches: [
           // Features Branch

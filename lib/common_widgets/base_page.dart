@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class BaseScreen extends StatefulWidget {
-  const BaseScreen({super.key, required this.navigationShell});
+class BasePage extends StatefulWidget {
+  const BasePage({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
   @override
-  State<BaseScreen> createState() => _BaseScreenState();
+  State<BasePage> createState() => _BasePageState();
 }
 
-class _BaseScreenState extends State<BaseScreen> {
+class _BasePageState extends State<BasePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
