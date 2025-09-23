@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class SampleScreen extends StatefulWidget {
-  const SampleScreen({super.key});
+class CookingCalendarPage extends StatefulWidget {
+  const CookingCalendarPage({super.key});
 
   @override
-  State<SampleScreen> createState() => _SampleScreenState();
+  State<CookingCalendarPage> createState() => _CookingCalendarPageState();
 }
 
-class _SampleScreenState extends State<SampleScreen> {
+class _CookingCalendarPageState extends State<CookingCalendarPage> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   final Map<DateTime, String> _mealNotes = {};
