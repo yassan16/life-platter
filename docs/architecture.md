@@ -2,6 +2,8 @@
 
 本プロジェクトは DDD をベースとした 3 層構造を採用しています。
 
+---
+
 ## レイヤー構造
 - **Domain Layer**
   - Entity, ValueObject, Repository Interface
