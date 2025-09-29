@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:life_platter/common/theme/app_colors.dart';
 
 class CookingCalendarPage extends StatefulWidget {
   const CookingCalendarPage({super.key});
@@ -19,12 +20,12 @@ class _CookingCalendarPageState extends State<CookingCalendarPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('カレンダー'),
-        backgroundColor: const Color(0xFFFFB74D),
+        backgroundColor: AppColors.appBarColor,
         foregroundColor: Colors.white,
         elevation: 0,
       ),
       body: Container(
-        color: const Color(0xFFFFF9C4),
+        color: AppColors.pageBackground,
         child: Column(
           children: [
             Padding(
