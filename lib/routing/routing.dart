@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:life_platter/common_widgets/base_page.dart';
+import 'package:life_platter/common/ui_widgets/base_page.dart';
 import 'package:life_platter/features/cooking_calendar_page.dart';
 
 // Navigator : 画面のスタック（履歴）を管理するクラス
