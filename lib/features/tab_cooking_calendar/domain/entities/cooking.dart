@@ -31,4 +31,14 @@ class Cooking {
     this.comment,
     required this.madeDateTime,
   });
+
+  /// 開発用のダミーデータを生成
+  static createDuumyData() {
+    return Cooking(
+      id: '0001',
+      name: 'ダミー料理',
+      category: 'ダミーカテゴリー',
+      madeDateTime: DateTime.now(),
+    );
+  }
 }
