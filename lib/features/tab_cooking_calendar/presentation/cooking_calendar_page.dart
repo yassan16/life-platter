@@ -35,7 +35,32 @@ class _CookingCalendarPageState extends State<CookingCalendarPage> {
                 firstDay: DateTime.utc(2020, 1, 1),
                 lastDay: DateTime.utc(2030, 12, 31),
                 focusedDay: _focusedDay,
+                calendarBuilders: CalendarBuilders(
+                  // デフォルトのセルをカスタマイズ
+                  defaultBuilder: (
+                    BuildContext context,
+                    DateTime day,
+                    DateTime focusedDay,
+                  ) {
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 250),
+                      margin: EdgeInsets.zero,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.green[600]!,
+                          width: 0.5,
+                        ),
+                      ),
+                      alignment: Alignment.topCenter,
+                      child: Text(
+                        day.day.toString(),
+                        style: TextStyle(color: Colors.black87),
+                      ),
+                    );
+                  },
+                ),
                 selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                // カレンダー自体のスタイル
                 calendarStyle: const CalendarStyle(
                   todayDecoration: BoxDecoration(
                     color: Color(0xFFFFB74D),
@@ -48,6 +73,7 @@ class _CookingCalendarPageState extends State<CookingCalendarPage> {
                   weekendTextStyle: TextStyle(color: Colors.deepOrange),
                   defaultTextStyle: TextStyle(color: Colors.black87),
                 ),
+                // ヘッダーのスタイル
                 headerStyle: const HeaderStyle(
                   formatButtonVisible: false,
                   titleCentered: true,
@@ -65,6 +91,7 @@ class _CookingCalendarPageState extends State<CookingCalendarPage> {
                     color: Color(0xFFFFA726),
                   ),
                 ),
+                // 日付選択時の処理
                 onDaySelected: (selectedDay, focusedDay) {
                   setState(() {
                     _selectedDay = selectedDay;
@@ -74,6 +101,7 @@ class _CookingCalendarPageState extends State<CookingCalendarPage> {
                 },
               ),
             ),
+            // 登録した料理
             if (_selectedDay != null && _mealNotes[_selectedDay] != null)
               Padding(
                 padding: const EdgeInsets.symmetric(
