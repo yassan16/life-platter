@@ -14,6 +14,7 @@ class _CookingCalendarPageState extends State<CookingCalendarPage> {
   DateTime? _selectedDay;
   final Map<DateTime, String> _mealNotes = {};
   final _locale = 'ja_JP';
+  static const double _dayCellHeight = 100; // 日付セルの高さを統一
 
   @override
   Widget build(BuildContext context) {
@@ -28,77 +29,146 @@ class _CookingCalendarPageState extends State<CookingCalendarPage> {
         color: AppColors.pageBackground,
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TableCalendar(
-                locale: _locale,
-                firstDay: DateTime.utc(2020, 1, 1),
-                lastDay: DateTime.utc(2030, 12, 31),
-                focusedDay: _focusedDay,
-                calendarBuilders: CalendarBuilders(
-                  // デフォルトのセルをカスタマイズ
-                  defaultBuilder: (
-                    BuildContext context,
-                    DateTime day,
-                    DateTime focusedDay,
-                  ) {
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 250),
-                      margin: EdgeInsets.zero,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.green[600]!,
-                          width: 0.5,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TableCalendar(
+                  rowHeight: _dayCellHeight,
+                  locale: _locale,
+                  firstDay: DateTime.utc(2020, 1, 1),
+                  lastDay: DateTime.utc(2030, 12, 31),
+                  focusedDay: _focusedDay,
+                  calendarBuilders: CalendarBuilders(
+                    // セルの高さを固定して、日付の下にスペースを確保
+                    defaultBuilder: (context, day, focusedDay) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        margin: EdgeInsets.zero,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.green[600]!,
+                            width: 0.5,
+                          ),
                         ),
-                      ),
-                      alignment: Alignment.topCenter,
-                      child: Text(
-                        day.day.toString(),
-                        style: TextStyle(color: Colors.black87),
-                      ),
-                    );
+                        alignment: Alignment.topCenter,
+                        child: SizedBox(
+                          height: _dayCellHeight, // セル高さ（変更可）
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 6),
+                              Text(
+                                day.day.toString(),
+                                style: const TextStyle(color: Colors.black87),
+                              ),
+                              const Spacer(),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    selectedBuilder: (context, day, focusedDay) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        margin: EdgeInsets.zero,
+                        alignment: Alignment.topCenter,
+                        child: SizedBox(
+                          height: _dayCellHeight,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 6),
+                              Container(
+                                width: 36,
+                                height: 36,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFFFFA726),
+                                  shape: BoxShape.circle,
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  day.day.toString(),
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              const Spacer(),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    todayBuilder: (context, day, focusedDay) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        margin: EdgeInsets.zero,
+                        alignment: Alignment.topCenter,
+                        child: SizedBox(
+                          height: _dayCellHeight,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 6),
+                              Container(
+                                width: 36,
+                                height: 36,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFFFFB74D),
+                                  shape: BoxShape.circle,
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  day.day.toString(),
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              const Spacer(),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                  // カレンダー自体のスタイル
+                  calendarStyle: const CalendarStyle(
+                    todayDecoration: BoxDecoration(
+                      color: Color(0xFFFFB74D),
+                      shape: BoxShape.circle,
+                    ),
+                    selectedDecoration: BoxDecoration(
+                      color: Color(0xFFFFA726),
+                      shape: BoxShape.circle,
+                    ),
+                    weekendTextStyle: TextStyle(color: Colors.deepOrange),
+                    defaultTextStyle: TextStyle(color: Colors.black87),
+                  ),
+                  // ヘッダーのスタイル
+                  headerStyle: const HeaderStyle(
+                    formatButtonVisible: false,
+                    titleCentered: true,
+                    titleTextStyle: TextStyle(
+                      color: Color(0xFFFFA726),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                    leftChevronIcon: Icon(
+                      Icons.chevron_left,
+                      color: Color(0xFFFFA726),
+                    ),
+                    rightChevronIcon: Icon(
+                      Icons.chevron_right,
+                      color: Color(0xFFFFA726),
+                    ),
+                  ),
+                  // 日付選択時の処理
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDay = selectedDay;
+                      _focusedDay = focusedDay;
+                    });
+                    _showMealInputDialog(selectedDay);
                   },
                 ),
-                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-                // カレンダー自体のスタイル
-                calendarStyle: const CalendarStyle(
-                  todayDecoration: BoxDecoration(
-                    color: Color(0xFFFFB74D),
-                    shape: BoxShape.circle,
-                  ),
-                  selectedDecoration: BoxDecoration(
-                    color: Color(0xFFFFA726),
-                    shape: BoxShape.circle,
-                  ),
-                  weekendTextStyle: TextStyle(color: Colors.deepOrange),
-                  defaultTextStyle: TextStyle(color: Colors.black87),
-                ),
-                // ヘッダーのスタイル
-                headerStyle: const HeaderStyle(
-                  formatButtonVisible: false,
-                  titleCentered: true,
-                  titleTextStyle: TextStyle(
-                    color: Color(0xFFFFA726),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                  leftChevronIcon: Icon(
-                    Icons.chevron_left,
-                    color: Color(0xFFFFA726),
-                  ),
-                  rightChevronIcon: Icon(
-                    Icons.chevron_right,
-                    color: Color(0xFFFFA726),
-                  ),
-                ),
-                // 日付選択時の処理
-                onDaySelected: (selectedDay, focusedDay) {
-                  setState(() {
-                    _selectedDay = selectedDay;
-                    _focusedDay = focusedDay;
-                  });
-                  _showMealInputDialog(selectedDay);
-                },
               ),
             ),
             // 登録した料理
