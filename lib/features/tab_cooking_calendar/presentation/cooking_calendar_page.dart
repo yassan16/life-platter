@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:life_platter/common/theme/app_colors.dart';
+import 'one_day_item_default_builder.dart';
 
 class CookingCalendarPage extends StatefulWidget {
   const CookingCalendarPage({super.key});
@@ -40,33 +41,7 @@ class _CookingCalendarPageState extends State<CookingCalendarPage> {
                   focusedDay: _focusedDay,
                   calendarBuilders: CalendarBuilders(
                     // セルの高さを固定して、日付の下にスペースを確保
-                    defaultBuilder: (context, day, focusedDay) {
-                      return AnimatedContainer(
-                        duration: const Duration(milliseconds: 250),
-                        margin: EdgeInsets.zero,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.green[600]!,
-                            width: 0.5,
-                          ),
-                        ),
-                        alignment: Alignment.topCenter,
-                        child: SizedBox(
-                          height: _dayCellHeight, // セル高さ（変更可）
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 6),
-                              Text(
-                                day.day.toString(),
-                                style: const TextStyle(color: Colors.black87),
-                              ),
-                              const Spacer(),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
+                    defaultBuilder: oneDayItemDefaultBuilder(_dayCellHeight),
                     selectedBuilder: (context, day, focusedDay) {
                       return AnimatedContainer(
                         duration: const Duration(milliseconds: 250),
@@ -166,7 +141,7 @@ class _CookingCalendarPageState extends State<CookingCalendarPage> {
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay;
                     });
-                    _showMealInputDialog(selectedDay);
+                    _showCookingRegisterDialog(selectedDay);
                   },
                 ),
               ),
@@ -195,7 +170,8 @@ class _CookingCalendarPageState extends State<CookingCalendarPage> {
     );
   }
 
-  void _showMealInputDialog(DateTime day) {
+  /// 料理登録ダイアログ
+  void _showCookingRegisterDialog(DateTime day) {
     final controller = TextEditingController(text: _mealNotes[day] ?? '');
     showDialog(
       context: context,
