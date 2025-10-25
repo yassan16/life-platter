@@ -12,11 +12,11 @@
 
 
 ## 主要ドキュメント
-- [アーキテクチャ方針](/docs/architecture.md)
-- [コーディング規約](/docs/coding_guidelines.md)
+- [アーキテクチャ方針](../docs/ai/architecture.md)
+- [コーディング規約](../docs/ai/coding_guidelines.md)
 - ドメインモデルと用語集
 - API仕様
-- [UI/UXガイドライン](/docs/ui_guidelines.md)
+- [UI/UXガイドライン](../docs/ai/ui_guidelines.md)
 - エラー処理方針
 - セキュリティルール
 - テスト戦略
