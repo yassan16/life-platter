@@ -42,6 +42,9 @@ class _CookingCalendarPageState extends State<CookingCalendarPage> {
                   calendarBuilders: CalendarBuilders(
                     // セルの高さを固定して、日付の下にスペースを確保
                     defaultBuilder: oneDayItemDefaultBuilder(_dayCellHeight),
+                    markerBuilder: (context, day, events) {
+                      return const SizedBox.shrink();
+                    },
                     selectedBuilder: (context, day, focusedDay) {
                       return AnimatedContainer(
                         duration: const Duration(milliseconds: 250),
