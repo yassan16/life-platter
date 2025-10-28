@@ -7,14 +7,14 @@ import 'package:life_platter/features/tab_cooking_calendar/presentation/cooking_
 // NavigatorState : Navigator の状態やコントローラー
 // 各 Branch の Navigatorの状態をグローバルに管理する
 final rootNavigatorKey = GlobalKey<NavigatorState>();
-final featuresNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'features');
+final calendarNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'calendar');
 final mapboxNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'mapbox');
 final spareNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'spare');
 
 /// アプリのルーティングを管理するクラス
 class Routing {
-  // Features Branch
-  static final String featuresScreenRouter = '/features';
+  // calendar Branch
+  static final String calendarScreenRouter = '/calendar';
 
   // Mapbox Branch
   static final String bScreenRouter = '/b';
@@ -24,7 +24,7 @@ class Routing {
 
   final router = GoRouter(
     navigatorKey: rootNavigatorKey,
-    initialLocation: featuresScreenRouter,
+    initialLocation: calendarScreenRouter,
     routes: [
       StatefulShellRoute.indexedStack(
         parentNavigatorKey: rootNavigatorKey,
@@ -32,12 +32,12 @@ class Routing {
           return BasePage(navigationShell: navigationShell);
         },
         branches: [
-          // Features Branch
+          // calendar Branch
           StatefulShellBranch(
-            navigatorKey: featuresNavigatorKey,
+            navigatorKey: calendarNavigatorKey,
             routes: [
               GoRoute(
-                path: featuresScreenRouter,
+                path: calendarScreenRouter,
                 pageBuilder:
                     (context, state) =>
                         const NoTransitionPage(child: CookingCalendarPage()),

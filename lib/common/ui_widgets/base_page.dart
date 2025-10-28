@@ -23,8 +23,8 @@ class _BasePageState extends State<BasePage> {
         },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.featured_play_list),
-            label: 'Features',
+            icon: Icon(Icons.calendar_month),
+            label: 'calendar',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Mapbox'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Spare'),
