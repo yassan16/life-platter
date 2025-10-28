@@ -5,6 +5,7 @@ import 'one_day_item_default_builder.dart';
 
 class CookingCalendarPage extends StatefulWidget {
   const CookingCalendarPage({super.key});
+  static final String path = '/calendar';
 
   @override
   State<CookingCalendarPage> createState() => _CookingCalendarPageState();

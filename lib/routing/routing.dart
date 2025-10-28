@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:life_platter/common/ui_widgets/base_page.dart';
+import 'package:life_platter/common/ui_widgets/empty_page.dart';
 import 'package:life_platter/features/tab_cooking_calendar/presentation/cooking_calendar_page.dart';
 
 // Navigator : 画面のスタック（履歴）を管理するクラス
@@ -8,23 +9,16 @@ import 'package:life_platter/features/tab_cooking_calendar/presentation/cooking_
 // 各 Branch の Navigatorの状態をグローバルに管理する
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final calendarNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'calendar');
-final mapboxNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'mapbox');
-final spareNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'spare');
+final menuBookNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'menuBook');
+final addNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'add');
+final graphNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'graph');
+final ohtersNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'ohters');
 
 /// アプリのルーティングを管理するクラス
 class Routing {
-  // calendar Branch
-  static final String calendarScreenRouter = '/calendar';
-
-  // Mapbox Branch
-  static final String bScreenRouter = '/b';
-
-  // 予備 Branch
-  static final String cScreenRouter = '/c';
-
   final router = GoRouter(
     navigatorKey: rootNavigatorKey,
-    initialLocation: calendarScreenRouter,
+    initialLocation: CookingCalendarPage.path,
     routes: [
       StatefulShellRoute.indexedStack(
         parentNavigatorKey: rootNavigatorKey,
@@ -37,7 +31,7 @@ class Routing {
             navigatorKey: calendarNavigatorKey,
             routes: [
               GoRoute(
-                path: calendarScreenRouter,
+                path: CookingCalendarPage.path,
                 pageBuilder:
                     (context, state) =>
                         const NoTransitionPage(child: CookingCalendarPage()),
@@ -55,31 +49,55 @@ class Routing {
               ),
             ],
           ),
-          // Mapbox Branch
-          // StatefulShellBranch(
-          //   navigatorKey: mapboxNavigatorKey,
-          //   routes: [
-          //     GoRoute(
-          //       path: bScreenRouter,
-          //       pageBuilder:
-          //           (context, state) =>
-          //               const NoTransitionPage(child: MapboxScreen()),
-          //     ),
-          //   ],
-          // ),
-
-          // 予備 Branch
-          // StatefulShellBranch(
-          //   navigatorKey: spareNavigatorKey,
-          //   routes: [
-          //     GoRoute(
-          //       path: cScreenRouter,
-          //       pageBuilder:
-          //           (context, state) =>
-          //               const NoTransitionPage(child: ScreenC()),
-          //     ),
-          //   ],
-          // ),
+          // menuBook Branch
+          StatefulShellBranch(
+            navigatorKey: menuBookNavigatorKey,
+            routes: [
+              GoRoute(
+                path: '/menuBook',
+                pageBuilder:
+                    (context, state) => const NoTransitionPage(
+                      child: EmptyPage(title: '料理リスト'),
+                    ),
+              ),
+            ],
+          ),
+          // add Branch
+          StatefulShellBranch(
+            navigatorKey: addNavigatorKey,
+            routes: [
+              GoRoute(
+                path: '/add',
+                pageBuilder:
+                    (context, state) =>
+                        const NoTransitionPage(child: EmptyPage(title: '料理追加')),
+              ),
+            ],
+          ),
+          // graph Branch
+          StatefulShellBranch(
+            navigatorKey: graphNavigatorKey,
+            routes: [
+              GoRoute(
+                path: '/graph',
+                pageBuilder:
+                    (context, state) =>
+                        const NoTransitionPage(child: EmptyPage(title: 'グラフ')),
+              ),
+            ],
+          ),
+          // ohters Branch
+          StatefulShellBranch(
+            navigatorKey: ohtersNavigatorKey,
+            routes: [
+              GoRoute(
+                path: '/others',
+                pageBuilder:
+                    (context, state) =>
+                        const NoTransitionPage(child: EmptyPage(title: 'その他')),
+              ),
+            ],
+          ),
         ],
       ),
     ],
